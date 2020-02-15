@@ -28,7 +28,7 @@ pipeline {
         }
 
         stage('Local Tests') {
-         //   parallel {
+            parallel {
                 //stage("Static Code Checks") {
                     //when { expression { commonPipelineEnvironment.configuration.runStage.STATIC_CODE_CHECKS } }
                     //steps { stageStaticCodeChecks script: this }
@@ -57,7 +57,7 @@ pipeline {
                     //when { expression { commonPipelineEnvironment.configuration.runStage.NPM_AUDIT } }
                     //steps { stageNpmAudit script: this }
                 //}
-          //  }
+            }
         }
 
         //stage('Remote Tests') {
