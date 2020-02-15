@@ -60,19 +60,19 @@ pipeline {
             }
         }
 
-        stage('Remote Tests') {
-            when { expression { commonPipelineEnvironment.configuration.runStage.REMOTE_TESTS } }
-            parallel {
-                stage("End to End Tests") {
-                    when { expression { commonPipelineEnvironment.configuration.runStage.E2E_TESTS } }
-                    steps { stageEndToEndTests script: this }
-                }
-                stage("Performance Tests") {
-                    when { expression { commonPipelineEnvironment.configuration.runStage.PERFORMANCE_TESTS } }
-                    steps { stagePerformanceTests script: this }
-                }
-            }
-        }
+        //stage('Remote Tests') {
+           // when { expression { commonPipelineEnvironment.configuration.runStage.REMOTE_TESTS } }
+            //parallel {
+                //stage("End to End Tests") {
+                    //when { expression { commonPipelineEnvironment.configuration.runStage.E2E_TESTS } }
+                    //steps { stageEndToEndTests script: this }
+                //}
+                //stage("Performance Tests") {
+                   // when { expression { commonPipelineEnvironment.configuration.runStage.PERFORMANCE_TESTS } }
+                    //steps { stagePerformanceTests script: this }
+               // }
+            //}
+       // }
 
         stage('Quality Checks') {
             when { expression { commonPipelineEnvironment.configuration.runStage.QUALITY_CHECKS } }
