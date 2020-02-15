@@ -129,7 +129,7 @@ pipeline {
        stage('Test') {
             steps { 
                 script{
-                   print commonPipelineEnvironment.configuration.runStage.BACKEND_UNIT_TESTS
+                   print commonPipelineEnvironment.configuration
                    print commonPipelineEnvironment.configuration.runStage.FRONTEND_INTEGRATION_TESTS
                 }
             }
