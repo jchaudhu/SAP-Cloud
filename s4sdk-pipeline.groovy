@@ -130,6 +130,7 @@ pipeline {
             steps { 
                 script{
                    echo commonPipelineEnvironment.configuration.runStage.BACKEND_UNIT_TESTS
+                   echo commonPipelineEnvironment.configuration.runStage.FRONTEND_INTEGRATION_TESTS
                 }
             }
        }  
