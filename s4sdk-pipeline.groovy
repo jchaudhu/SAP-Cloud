@@ -27,7 +27,7 @@ pipeline {
             }
         }
 
-       // stage('Local Tests') {
+        stage('Local Tests') {
          //   parallel {
                 //stage("Static Code Checks") {
                     //when { expression { commonPipelineEnvironment.configuration.runStage.STATIC_CODE_CHECKS } }
@@ -41,14 +41,14 @@ pipeline {
                     //when { expression { commonPipelineEnvironment.configuration.runStage.BACKEND_UNIT_TESTS } }
                     //steps { stageUnitTests script: this }
                 //}
-                //stage("Backend Integration Tests") {
-                    //when { expression { commonPipelineEnvironment.configuration.runStage.BACKEND_INTEGRATION_TESTS } }
-                    //steps { stageBackendIntegrationTests script: this }
-                //}
-            //    stage("Frontend Integration Tests") {
-             //       when { expression { commonPipelineEnvironment.configuration.runStage.FRONTEND_INTEGRATION_TESTS } }
-              //      steps { stageFrontendIntegrationTests script: this }
-             //   }
+                stage("Backend Integration Tests") {
+                    when { expression { commonPipelineEnvironment.configuration.steps.setupCommonPipelineEnvironment.runStage.BACKEND_INTEGRATION_TESTS } }
+                    steps { stageBackendIntegrationTests script: this }
+                }
+                stage("Frontend Integration Tests") {
+                    when { expression { commonPipelineEnvironment.configuration.runStage.FRONTEND_INTEGRATION_TESTS } }
+                    steps { stageFrontendIntegrationTests script: this }
+                }
               //  stage("Frontend Unit Tests") {
                //     when { expression { commonPipelineEnvironment.configuration.runStage.FRONTEND_UNIT_TESTS } }
                //     steps { stageFrontendUnitTests script: this }
@@ -58,7 +58,7 @@ pipeline {
                     //steps { stageNpmAudit script: this }
                 //}
           //  }
-      //  }
+        }
 
         //stage('Remote Tests') {
            // when { expression { commonPipelineEnvironment.configuration.runStage.REMOTE_TESTS } }
