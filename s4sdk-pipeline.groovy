@@ -130,7 +130,8 @@ pipeline {
             steps { 
                 script{
                    print commonPipelineEnvironment.configuration
-                   print commonPipelineEnvironment.configuration.runStage.FRONTEND_INTEGRATION_TESTS
+                   print commonPipelineEnvironment.configuration.steps.setupCommonPipelineEnvironment.runStage.BACKEND_INTEGRATION_TESTS
+                   print commonPipelineEnvironment.configuration.steps.setupCommonPipelineEnvironment.runStage.FRONTEND_INTEGRATION_TESTS
                 }
             }
        }  
