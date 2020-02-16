@@ -126,12 +126,39 @@ pipeline {
        //     steps { stageProductionDeployment script: this }
      //   }
         
-       stage('Test') {
+       stage('Artifact Deployment') {
             steps { 
                 script{
-                   print commonPipelineEnvironment.configuration
-                   print commonPipelineEnvironment.configuration.steps.setupCommonPipelineEnvironment.runStage.BACKEND_INTEGRATION_TESTS
-                   print commonPipelineEnvironment.configuration.steps.setupCommonPipelineEnvironment.runStage.FRONTEND_INTEGRATION_TESTS
+                    pom = readMavenPom file: "application/pom.xml"
+                    filesByGlob = findFiles(glob: "target/*.jar")
+                    echo "${filesByGlob[0].name}"
+                    artifactPath = filesByGlob[0].path
+                    artifactExists = fileExists artifactPath
+                    if(artifactExists){
+                        nexusArtifactUploader(
+                            nexusVersion: NEXUS_VERSION,
+                            protocol: NEXUS_PROTOCOL,
+                            nexusUrl: NEXUS_URL,
+                            groupId: pom.groupId,
+                            version: '${BUILD_NUMBER}',
+                            repository: NEXUS_REPOSITORY,
+                            credentialsId: NEXUS_CREDENTIAL_ID,
+                            artifacts:[
+                                [artifactId: pom.artifactId,
+                                classifier: '',
+                                file: artifactPath,
+                                type: "jar"
+                                ],
+                                [artifactId: pom.artifactId,
+                                 classifier: '',
+                                 file: "pom.xml",
+                                 type: "pom"]
+                                ]
+                               
+                            )
+                    }else{
+                        error "*** File: ${artifactPath} could not be found";
+                    }
                 }
             }
        }  
