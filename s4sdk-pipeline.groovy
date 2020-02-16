@@ -112,13 +112,13 @@ pipeline {
            // }
       //  }
 
-      //  stage('Artifact Deployment') {
-         //   when { expression { commonPipelineEnvironment.configuration.runStage.ARTIFACT_DEPLOYMENT } }
-          //  steps {
-           //     milestone 70
-           //     stageArtifactDeployment script: this
-           // }
-      //  }
+        stage('Artifact Deployment') {
+            when { expression { commonPipelineEnvironment.configuration.runStage.ARTIFACT_DEPLOYMENT } }
+            steps {
+                milestone 70
+                stageArtifactDeployment script: this
+            }
+        }
 
        // stage('Production Deployment') {
        //     when { expression { commonPipelineEnvironment.configuration.runStage.PRODUCTION_DEPLOYMENT } }
@@ -126,42 +126,42 @@ pipeline {
        //     steps { stageProductionDeployment script: this }
      //   }
         
-       stage('Artifact Deployment') {
-            steps { 
-                script{
-                    pom = readMavenPom file: "application/pom.xml"
-                    filesByGlob = findFiles(glob: "target/*.jar")
-                    echo "${filesByGlob[0].name}"
-                    artifactPath = filesByGlob[0].path
-                    artifactExists = fileExists artifactPath
-                    if(artifactExists){
-                        nexusArtifactUploader(
-                            nexusVersion: NEXUS_VERSION,
-                            protocol: NEXUS_PROTOCOL,
-                            nexusUrl: NEXUS_URL,
-                            groupId: pom.groupId,
-                            version: '${BUILD_NUMBER}',
-                            repository: NEXUS_REPOSITORY,
-                            credentialsId: NEXUS_CREDENTIAL_ID,
-                            artifacts:[
-                                [artifactId: pom.artifactId,
-                                classifier: '',
-                                file: artifactPath,
-                                type: "jar"
-                                ],
-                                [artifactId: pom.artifactId,
-                                 classifier: '',
-                                 file: "pom.xml",
-                                 type: "pom"]
-                                ]
+      // stage('Artifact Deployment') {
+           // steps { 
+               // script{
+                 //   pom = readMavenPom file: "application/pom.xml"
+                   // filesByGlob = findFiles(glob: "target/*.jar")
+                   // echo "${filesByGlob[0].name}"
+                   // artifactPath = filesByGlob[0].path
+                   // artifactExists = fileExists artifactPath
+                    //if(artifactExists){
+                        //nexusArtifactUploader(
+                           // nexusVersion: NEXUS_VERSION,
+                          //  protocol: NEXUS_PROTOCOL,
+                           // nexusUrl: NEXUS_URL,
+                           // groupId: pom.groupId,
+                           // version: '${BUILD_NUMBER}',
+                           // repository: NEXUS_REPOSITORY,
+                           // credentialsId: NEXUS_CREDENTIAL_ID,
+                          //  artifacts:[
+                             //   [artifactId: pom.artifactId,
+                             //   classifier: '',
+                              //  file: artifactPath,
+                               // type: "jar"
+                              //  ],
+                              //  [artifactId: pom.artifactId,
+                              //   classifier: '',
+                              //   file: "pom.xml",
+                              //   type: "pom"]
+                             //   ]
                                
-                            )
-                    }else{
-                        error "*** File: ${artifactPath} could not be found";
-                    }
-                }
-            }
-       }  
+                          //  )
+                   // }else{
+                      //  error "*** File: ${artifactPath} could not be found";
+                   // }
+               // }
+           // }
+      // }  
 
     }
     post {
