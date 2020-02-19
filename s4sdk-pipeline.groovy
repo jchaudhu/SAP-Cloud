@@ -10,7 +10,7 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
         skipDefaultCheckout()
     }
-    stages {
+    /*stages {
         stage('Init') {
             steps {
                 milestone 10
@@ -163,8 +163,8 @@ pipeline {
            // }
       // }  
 
-    }
-    post {
+    }*/
+   /* post {
         always {
             script {
                 postActionArchiveDebugLog script: this
@@ -183,5 +183,15 @@ pipeline {
             }
         }
         failure { deleteDir() }
+    }*/
+    
+    stages{
+        stage('Test'){
+            steps {
+                script{
+                   print Hello
+                }
+            }
+        }
     }
 }
