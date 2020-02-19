@@ -189,7 +189,7 @@ pipeline {
         stage('Test'){
             steps {
                 script{
-                   print Hello
+                   echo 'Hello'
                 }
             }
         }
