@@ -193,5 +193,13 @@ pipeline {
                 }
             }
         }
+        stage('Init') {
+            steps {
+                milestone 10
+                library "s4sdk-pipeline-library@${pipelineSdkVersion}"
+                stageInitS4sdkPipeline scripting: this
+                abortOldBuilds script: this
+            }
+        }
     }
 }
